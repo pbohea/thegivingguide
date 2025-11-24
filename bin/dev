@@ -1,4 +1,2 @@
 #!/usr/bin/env bash
-
-#!/usr/bin/env bash
 exec foreman start -f Procfile.dev

@@ -1,192 +1,201 @@
-<% content_for :title, "BarChord" %>
+<% content_for :title, "The Giving Guide - Your Personal Guide to Gifting" %>
 
 <style>
-  /* Keep content from being covered by the fixed bottom bar */
-  .with-bottom-pad {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom));
-  }
-
-  /* Logo styling with subtle animation */
-  .hero-logo {
-    animation: fadeInDown 0.8s ease-out;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
-  }
-
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Modern button styles */
-  .modern-btn-primary {
-    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
-    border: none;
-    border-radius: 16px;
-    padding: 1.5rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
+  .hero-section {
+    min-height: 90vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    box-shadow: 0 10px 30px rgba(13, 110, 253, 0.3);
-    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     position: relative;
     overflow: hidden;
   }
 
-  .modern-btn-primary::before {
+  .hero-section::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .modern-btn-primary:hover::before {
-    left: 100%;
-  }
-
-  .modern-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(13, 110, 253, 0.4);
-    color: white;
-  }
-
-  .modern-btn-primary:active {
-    transform: translateY(0);
-  }
-
-  .modern-btn-outline {
-    background: white;
-    border: 2px solid #0d6efd;
-    border-radius: 16px;
-    padding: 1.5rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #0d6efd;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-  }
-
-  .modern-btn-outline:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(13, 110, 253, 0.2);
-    border-color: #0056b3;
-    color: #0056b3;
-    background: white;
-  }
-
-  /* Slide-up animation for the bottom CTA */
-  .auth-cta {
-    position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    padding-bottom: env(safe-area-inset-bottom);
-    background: linear-gradient(to top, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(13, 110, 253, 0.1);
-    animation: slideUp .3s ease-out both;
-    z-index: 1030;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,122.7C1248,107,1344,85,1392,74.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+    background-size: cover;
   }
 
-  @keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 2rem;
   }
 
-  .auth-btn {
-    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
-    border: none;
-    color: white;
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+  }
+
+  .cta-button {
+    background: white;
+    color: #667eea;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    padding: 0.75rem 2rem;
-    border-radius: 25px;
-    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
   }
 
-  .auth-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
-    color: white;
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    color: #667eea;
+  }
+
+  .features-section {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .feature-card {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #667eea;
+  }
+
+  .feature-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .feature-description {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
   }
 </style>
 
-<div class="min-vh-100 bg-light d-flex flex-column justify-content-start">
-  <!-- Main content container -->
-  <div class="container pt-4 with-bottom-pad" style="max-width: 600px; position: relative; z-index: 1;">
-    <!-- Hero -->
-    <div class="text-center mb-4">
-      <img src="/logoplain.png" alt="Logo" class="hero-logo mb-0" width="80" height="104">
-    </div>
-
-    <div class="d-grid gap-3 mb-4">
-      <!-- Find Events Near Me -->
-      <%= form_with url: events_path, method: :get, local: true,
-                    data: { controller: "location-search",
-                            action: "submit->location-search#validateLocation" } do |f| %>
-
-        <%= f.hidden_field :radius, value: 5 %>
-        <%= f.hidden_field :date_range, value: "" %>
-        <%= f.hidden_field :lat, data: { "location-search-target": "latInput" } %>
-        <%= f.hidden_field :lng, data: { "location-search-target": "lngInput" } %>
-        <%= f.text_field :address, class: "d-none", data: { "location-search-target": "addressInput" } %>
-
-        <div id="location-error" class="d-none"></div>
-
-        <div class="d-grid">
-          <button type="button"
-                  class="modern-btn-primary"
-                  data-action="click->location-search#useCurrentLocation"
-                  data-location-search-target="locationButton"
-                  aria-busy="false">
-            <span class="fs-5" data-location-search-target="label">
-              Find Live Music Near Me
-            </span>
-            <img src="/logoplain.png"
-                 alt="Loading location"
-                 width="36" height="46"
-                 class="logo-icon d-none"
-                 data-location-search-target="logo">
-          </button>
-        </div>
-      <% end %>
-
-      <!-- Search Button -->
-      <div class="d-grid">
-        <%= link_to search_path, class: "modern-btn-outline text-decoration-none d-flex justify-content-center align-items-center" do %>
-          <i class="fas fa-search me-2 fs-5"></i>
-          <span class="fs-5">Discover more</span>
-        <% end %>
-      </div>
-    </div>
-
-    <%= render 'new_artists', artists: @new_artists %>
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">The Giving Guide</h1>
+    <p class="hero-subtitle">Your Personal Guide to Finding the Perfect Gift</p>
+    <p class="mb-4">Expert 1-on-1 gift consulting to help you give meaningful gifts that delight</p>
+    <%= link_to "Get Started", new_consultation_request_path, class: "cta-button" %>
   </div>
+</div>
 
-  <!-- Bottom Sign In/Sign Up (only if no one signed in) -->
-  <% unless owner_signed_in? || artist_signed_in? || user_signed_in? || promoter_signed_in? %>
-    <div class="auth-cta">
-      <div class="container py-3" style="max-width: 600px;">
-        <div class="d-flex justify-content-center gap-3">
-          <%= link_to "Sign In", new_user_session_path,
-                class: "auth-btn text-decoration-none",
-                data: { turbo: false } %>
+<!-- Features Section -->
+<div class="features-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">🎁</div>
+          <h3 class="feature-title">Expert Guidance</h3>
+          <p class="feature-description">
+            Get personalized recommendations from a gift giving expert who understands your needs and budget
+          </p>
+        </div>
+      </div>
 
-          <%= link_to "Sign Up", new_user_registration_path,
-                class: "auth-btn text-decoration-none",
-                data: { turbo: false } %>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">💝</div>
+          <h3 class="feature-title">Curated Collections</h3>
+          <p class="feature-description">
+            Browse hand-picked gift guides for every occasion, recipient, and interest
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3 class="feature-title">Real Experiences</h3>
+          <p class="feature-description">
+            Read authentic reviews from people who've given these gifts and made someone's day
+          </p>
         </div>
       </div>
     </div>
-  <% end %>
+
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <h2 class="mb-4">How It Works</h2>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="feature-card">
+              <div class="feature-icon">📝</div>
+              <h4>1. Tell Us</h4>
+              <p>Share who you're shopping for and the occasion</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card">
+              <div class="feature-icon">💬</div>
+              <h4>2. Consult</h4>
+              <p>Get personalized 1-on-1 guidance</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h4>3. Choose</h4>
+              <p>Pick from expert recommendations</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="feature-card">
+              <div class="feature-icon">🎉</div>
+              <h4>4. Delight</h4>
+              <p>Give a gift they'll love</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <%= link_to "Book a Consultation", new_consultation_request_path, class: "cta-button" %>
+        <%= link_to "Browse Gift Guides", gift_guides_path, class: "cta-button ms-3", style: "background: #667eea; color: white;" %>
+      </div>
+    </div>
+  </div>
 </div>
