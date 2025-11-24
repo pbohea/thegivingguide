@@ -32,7 +32,7 @@ end
     # Rails.logger.info "=== USING PATH: #{@stored_path || user_dashboard_path(resource)} ==="
 
     # @stored_path || user_dashboard_path(resource)
-    user_landing_path(resource)
+    root_path
   end
 
   def after_update_path_for(resource)

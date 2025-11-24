@@ -25,8 +25,8 @@
 class User < ApplicationRecord
   # Devise modules
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable
+         :recoverable, :rememberable, :validatable
+        #  :confirmable
 
   # Associations
   has_many :recipients, dependent: :destroy
