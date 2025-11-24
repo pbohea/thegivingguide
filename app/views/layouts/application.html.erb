@@ -1,52 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-
-
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
-    <% if hotwire_native_app? %>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <% end %>
-
-    <title><%= content_for(:title) || "BarChord" %></title>
+    <title><%= content_for(:title) || "The Giving Guide" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-itunes-app" content="app-id=6753730148, app-argument=https://barchord.co">
-    <meta name="facebook-domain-verification" content="uk2j7vnd9b577s7745ez6wkaqq403k" />
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= render "shared/head_assets" %>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKCZDT1DBJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-ZKCZDT1DBJ');
-    </script>
-
     <!-- App styles -->
-    <%= stylesheet_link_tag "application" %>
-    <% if hotwire_native_app? %>
-      <%= stylesheet_link_tag "native" %>
-    <% end %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= yield :head %>
   </head>
 
   <body class="bg-light min-vh-100 d-flex flex-column">
     <%= render "shared/navbar" %>
-    <%= render "shared/foot_assets" %>
 
     <% if Rails.env.development? %>
-      <div style="color: red; text-align: center;">
-        DEV ENVIRONMENT 
+      <div style="color: red; text-align: center; padding: 0.5rem; background: #fff3cd;">
+        DEV ENVIRONMENT
       </div>
     <% end %>
 
@@ -65,8 +41,8 @@
 
     <main class="flex-grow-1 d-flex flex-column">
       <%= yield %>
-    </div>
-  </main>
+    </main>
 
-</body>
+    <%= render "shared/foot_assets" %>
+  </body>
 </html>
