@@ -1,67 +1,125 @@
-<!--views/users/dashboard.html.erb-->
-<% content_for :title, "Dashboard" %>
-    <% if user_signed_in? || artist_signed_in? %>
-      <meta data-controller="bridge--notification-token">
-    <% end %>
-  <!-- Favorite Artists -->
-  <div class="mt-3 mb-5">
-    <h5 class="text-primary text-center mb-4">
-      <i class="fas fa-music me-2"></i> Favorite Artists
-    </h5>
+<% content_for :title, "My Dashboard - The Givingguide" %>
 
-    <% if @favorite_artists.any? %>
-      <div class="mx-auto" style="max-width: 500px;">
-        <% @favorite_artists.each do |artist| %>
-          <%= link_to artist_path(artist), class: "text-decoration-none" do %>
-            <div class="card mb-3 shadow-sm text-center" 
-                 style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;"
-                 onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
-                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.12)'">
-              <div class="card-body d-flex flex-column align-items-center">
-                <% if artist.image.attached? %>
-                  <img src="<%= url_for(artist.image) %>" 
-                       class="rounded-circle mb-2" 
-                       style="width: 60px; height: 60px; object-fit: cover;">
-                <% else %>
-                  <i class="fas fa-user-circle fa-2x text-secondary mb-2"></i>
-                <% end %>
-                <h6 class="mb-1 text-dark"><%= artist.username %></h6>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    <% else %>
-      <p class="text-muted fst-italic text-center">You haven't followed any artists yet.</p>
-    <% end %>
+<style>
+  .dashboard-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .dashboard-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+  }
+
+  .card-title {
+    color: #2d6a4f;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+  }
+
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="dashboard-header">
+  <div class="container">
+    <h1 class="dashboard-title">Welcome back, <%= @user.email.split('@').first.capitalize %>!</h1>
+    <p>Manage your consultation requests and experiences</p>
   </div>
+</div>
 
-  <!-- Favorite Venues -->
-  <div class="mt-5">
-    <h5 class="text-success text-center mb-4">
-      <i class="fas fa-map-marker-alt me-2"></i> Favorite Venues
-    </h5>
-
-    <% if @favorite_venues.any? %>
-      <div class="mx-auto" style="max-width: 500px;">
-        <% @favorite_venues.each do |venue| %>
-          <%= link_to venue_path(venue), class: "text-decoration-none" do %>
-            <div class="card mb-3 shadow-sm text-center" 
-                 style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;"
-                 onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
-                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.12)'">
-              <div class="card-body">
-                <h6 class="mb-0 text-dark">
-                  <i class="fas fa-microphone-alt me-2 text-muted"></i>
-                  <%= venue.name %>
-                </h6>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="dashboard-card">
+        <h2 class="card-title">Recent Consultation Requests</h2>
+        <% if @consultation_requests.any? %>
+          <div class="list-group">
+            <% @consultation_requests.each do |request| %>
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h6 class="mb-1"><%= request.name %></h6>
+                    <p class="mb-1 text-muted small">
+                      <%= truncate(request.message, length: 100) %>
+                    </p>
+                    <small class="text-muted">
+                      Submitted <%= time_ago_in_words(request.created_at) %> ago
+                    </small>
+                  </div>
+                  <% if request.status.present? %>
+                    <span class="badge bg-<%= request.status == 'completed' ? 'success' : 'warning' %>">
+                      <%= request.status.titleize %>
+                    </span>
+                  <% else %>
+                    <span class="badge bg-secondary">Pending</span>
+                  <% end %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
+          <div class="text-center mt-3">
+            <%= link_to "Request Another Consultation", new_consultation_request_path, class: "btn btn-outline-primary" %>
+          </div>
+        <% else %>
+          <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <p>You haven't requested any consultations yet</p>
+            <%= link_to "Request a Consultation", new_consultation_request_path, class: "btn btn-primary" %>
+          </div>
         <% end %>
       </div>
-    <% else %>
-      <p class="text-muted fst-italic text-center">You haven't followed any venues yet.</p>
-    <% end %>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="dashboard-card">
+        <h2 class="card-title">Your Experiences</h2>
+        <% if @experiences.any? %>
+          <div class="list-group">
+            <% @experiences.each do |experience| %>
+              <div class="list-group-item">
+                <p class="mb-1"><%= truncate(experience.content, length: 150) %></p>
+                <small class="text-muted">
+                  Shared <%= time_ago_in_words(experience.created_at) %> ago
+                  <% if experience.product %>
+                    for <%= link_to experience.product.name, product_path(experience.product) %>
+                  <% elsif experience.gift_guide %>
+                    for <%= link_to experience.gift_guide.name, gift_guide_path(experience.gift_guide) %>
+                  <% end %>
+                </small>
+              </div>
+            <% end %>
+          </div>
+          <div class="text-center mt-3">
+            <%= link_to "Share Another Experience", new_experience_path, class: "btn btn-outline-primary" %>
+          </div>
+        <% else %>
+          <div class="empty-state">
+            <div class="empty-state-icon">✨</div>
+            <p>You haven't shared any experiences yet</p>
+            <%= link_to "Share an Experience", new_experience_path, class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

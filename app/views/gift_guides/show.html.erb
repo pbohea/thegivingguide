@@ -1,2 +1,102 @@
-<h1>GiftGuides#show</h1>
-<p>Find me in app/views/gift_guides/show.html.erb</p>
+<% content_for :title, "#{@gift_guide.name} - The Givingguide" %>
+
+<style>
+  .guide-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .guide-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .product-name {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-price {
+    color: #2d6a4f;
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+</style>
+
+<div class="guide-header">
+  <div class="container">
+    <% if @gift_guide.occasion %>
+      <p class="mb-2"><%= @gift_guide.occasion.name %></p>
+    <% end %>
+    <h1 class="guide-title"><%= @gift_guide.name %></h1>
+    <% if @gift_guide.description.present? %>
+      <p class="lead"><%= @gift_guide.description %></p>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <% if @products.any? %>
+    <div class="row">
+      <% @products.each do |product| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="product-card">
+            <% if product.image.attached? %>
+              <%= image_tag product.image, class: "product-image", alt: product.name %>
+            <% else %>
+              <div class="product-image bg-light d-flex align-items-center justify-content-center">
+                <span style="font-size: 3rem;">🎁</span>
+              </div>
+            <% end %>
+            <h3 class="product-name"><%= link_to product.name, product_path(product), class: "text-decoration-none text-dark" %></h3>
+            <% if product.description.present? %>
+              <p class="text-muted small"><%= truncate(product.description, length: 100) %></p>
+            <% end %>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <% if product.price.present? %>
+                <span class="product-price">$<%= number_with_precision(product.price, precision: 2) %></span>
+              <% end %>
+              <% if product.url.present? %>
+                <%= link_to "View Product", product.url, class: "btn btn-sm btn-primary", target: "_blank", rel: "noopener" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5">
+      <p class="text-muted">No products in this guide yet.</p>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-4 mb-5">
+    <%= link_to "← Back to Gift Guides", gift_guides_path, class: "btn btn-outline-secondary" %>
+  </div>
+</div>

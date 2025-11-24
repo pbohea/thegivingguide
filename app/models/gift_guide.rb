@@ -19,10 +19,15 @@
 #
 class GiftGuide < ApplicationRecord
   # Associations
-  belongs_to :occasion
+  belongs_to :occasion, optional: true
   has_and_belongs_to_many :products
   has_many :experiences
+  has_one_attached :image
 
   # Validations
-  validates :name, presence: true
+  validates :caption, presence: true
+  validates :image, presence: true
+
+  # Scopes
+  default_scope { order(position: :asc) }
 end

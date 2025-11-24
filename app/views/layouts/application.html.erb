@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "The Giving Guide" %></title>
+    <title><%= content_for(:title) || "The Givingguide" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -20,11 +20,11 @@
   <body class="bg-light min-vh-100 d-flex flex-column">
     <%= render "shared/navbar" %>
 
-    <% if Rails.env.development? %>
-      <div style="color: red; text-align: center; padding: 0.5rem; background: #fff3cd;">
-        DEV ENVIRONMENT
-      </div>
-    <% end %>
+    <%# <% if Rails.env.development? %>
+    <%#   <div style="color: red; text-align: center; padding: 0.5rem; background: #fff3cd;">
+    <%#     DEV ENVIRONMENT
+    <%#   </div>
+    <%# <% end %>
 
     <div id="flash-overlay" style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 90%;">
       <% flash.each do |key, message| %>

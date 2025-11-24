@@ -6,17 +6,7 @@
       <div class="card shadow-sm rounded-4">
         <div class="card-body">
           <h2 class="card-title text-center text-primary mb-2">User Login</h2>
-            <p class="text-center text-muted small mb-3">
-          Or sign in as an
-            <%= link_to "Artist,", new_artist_session_path,
-                  class: "text-primary text-decoration-none" %>
-            <%= link_to "Promoter", new_promoter_session_path,
-                  class: "text-primary text-decoration-none" %>
-            or
-            <%= link_to "Owner", new_owner_session_path,
-                  class: "text-primary text-decoration-none" %>
-            instead
-            </p>
+            
 
           <%= form_with scope: :user, url: session_path(:user), method: :post, data: { turbo: false } do |f| %>
             <div class="mb-3">

@@ -1,9 +1,9 @@
-<% content_for :title, "The Giving Guide - Your Personal Guide to Gifting" %>
+<% content_for :title, "The Givingguide - Your Personal Guide to Gifting" %>
 
 <style>
   .hero-section {
     min-height: 90vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
     color: white;
     display: flex;
     align-items: center;
@@ -31,11 +31,19 @@
     padding: 2rem;
   }
 
+  .hero-logo {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  }
+
   .hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: 4rem;
+    font-weight: 400;
     margin-bottom: 1.5rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    font-family: 'Great Vibes', cursive;
   }
 
   .hero-subtitle {
@@ -46,7 +54,7 @@
 
   .cta-button {
     background: white;
-    color: #667eea;
+    color: #1b4332;
     padding: 1rem 3rem;
     font-size: 1.2rem;
     font-weight: 600;
@@ -61,7 +69,7 @@
   .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    color: #667eea;
+    color: #1b4332;
   }
 
   .features-section {
@@ -84,7 +92,7 @@
   .feature-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #667eea;
+    color: #2d6a4f;
   }
 
   .feature-title {
@@ -113,7 +121,8 @@
 <!-- Hero Section -->
 <div class="hero-section">
   <div class="hero-content">
-    <h1 class="hero-title">The Giving Guide</h1>
+    <%= image_tag "givingguide_logo.png", alt: "The Givingguide", class: "hero-logo mb-4" %>
+    <h1 class="hero-title">The Givingguide</h1>
     <p class="hero-subtitle">Your Personal Guide to Finding the Perfect Gift</p>
     <p class="mb-4">Expert 1-on-1 gift consulting to help you give meaningful gifts that delight</p>
     <%= link_to "Get Started", new_consultation_request_path, class: "cta-button" %>
@@ -194,7 +203,7 @@
     <div class="row mt-5">
       <div class="col-12 text-center">
         <%= link_to "Book a Consultation", new_consultation_request_path, class: "cta-button" %>
-        <%= link_to "Browse Gift Guides", gift_guides_path, class: "cta-button ms-3", style: "background: #667eea; color: white;" %>
+        <%= link_to "Browse Gift Guides", gift_guides_path, class: "cta-button ms-3", style: "background: #2d6a4f; color: white;" %>
       </div>
     </div>
   </div>

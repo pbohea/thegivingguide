@@ -1,2 +1,100 @@
-<h1>GiftGuides#index</h1>
-<p>Find me in app/views/gift_guides/index.html.erb</p>
+<% content_for :title, "Posts - The Givingguide" %>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .instagram-feed {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .post-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .post-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .post-content {
+    padding: 1.5rem;
+  }
+
+  .post-caption {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .occasion-badge {
+    background: #2d6a4f;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    display: inline-block;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: #999;
+  }
+
+  .empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">Gift Inspiration</h1>
+    <p>Curated ideas for every occasion</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="instagram-feed">
+    <% if @gift_guides.any? %>
+      <% @gift_guides.each do |guide| %>
+        <div class="post-card">
+          <% if guide.image.attached? %>
+            <%= image_tag guide.image, class: "post-image", alt: guide.caption %>
+          <% end %>
+
+          <div class="post-content">
+            <% if guide.occasion %>
+              <span class="occasion-badge mb-2 d-inline-block"><%= guide.occasion.name %></span>
+            <% end %>
+            <p class="post-caption"><%= simple_format(guide.caption) %></p>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <div class="empty-state-icon">📷</div>
+        <h3>No posts yet</h3>
+        <p>Check back soon for gift inspiration!</p>
+        <%= link_to "Request a Consultation", new_consultation_request_path, class: "btn btn-primary mt-3" %>
+      </div>
+    <% end %>
+  </div>
+</div>

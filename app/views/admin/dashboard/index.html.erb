@@ -1,0 +1,89 @@
+<% content_for :title, "Admin Dashboard" %>
+
+<style>
+  .admin-header {
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2d6a4f;
+  }
+
+  .stat-label {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="admin-header">
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <p>Manage your content</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="stat-card">
+        <div class="stat-number"><%= @gift_guides_count %></div>
+        <div class="stat-label">Posts</div>
+        <%= link_to "Manage Posts", admin_gift_guides_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="stat-card">
+        <div class="stat-number"><%= @products_count %></div>
+        <div class="stat-label">Products</div>
+        <%= link_to "Manage Products", admin_products_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="stat-card">
+        <div class="stat-number"><%= @occasions_count %></div>
+        <div class="stat-label">Occasions</div>
+        <%= link_to "Manage Occasions", admin_occasions_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="stat-card">
+        <div class="stat-number"><%= @experiences_count %></div>
+        <div class="stat-label">User Experiences</div>
+        <%= link_to "View Experiences", admin_experiences_path, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="stat-card">
+        <div class="stat-number"><%= @consultation_requests_count %></div>
+        <div class="stat-label">Consultation Requests</div>
+        <%= link_to "View Requests", admin_consultation_requests_path, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+  </div>
+</div>

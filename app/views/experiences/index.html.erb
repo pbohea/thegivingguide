@@ -1,2 +1,88 @@
-<h1>Experiences#index</h1>
-<p>Find me in app/views/experiences/index.html.erb</p>
+<% content_for :title, "Gift Experiences - The Givingguide" %>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .experience-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+  }
+
+  .experience-author {
+    color: #2d6a4f;
+    font-weight: 600;
+  }
+
+  .experience-link {
+    font-size: 0.9rem;
+    color: #666;
+  }
+</style>
+
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">Gift Experiences</h1>
+    <p>Real stories from people who gave meaningful gifts</p>
+    <% if user_signed_in? %>
+      <%= link_to "Share Your Experience", new_experience_path, class: "btn btn-light btn-lg mt-3" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <% if @experiences.any? %>
+    <% @experiences.each do |experience| %>
+      <div class="experience-card">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <p class="experience-author mb-1">
+              <%= experience.user.email.split('@').first.capitalize %>
+            </p>
+            <small class="text-muted">
+              <%= time_ago_in_words(experience.created_at) %> ago
+            </small>
+          </div>
+          <% if experience.rating.present? %>
+            <div class="text-warning">
+              <%= "⭐" * experience.rating.to_i %>
+            </div>
+          <% end %>
+        </div>
+
+        <p class="mb-3"><%= experience.content %></p>
+
+        <div class="experience-link">
+          <% if experience.product %>
+            Gift: <%= link_to experience.product.name, product_path(experience.product) %>
+          <% elsif experience.gift_guide %>
+            From: <%= link_to experience.gift_guide.name, gift_guide_path(experience.gift_guide) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="text-center py-5">
+      <p class="text-muted">No experiences shared yet. Be the first!</p>
+      <% if user_signed_in? %>
+        <%= link_to "Share Your Experience", new_experience_path, class: "btn btn-primary mt-3" %>
+      <% else %>
+        <%= link_to "Sign In to Share", new_user_session_path, class: "btn btn-primary mt-3" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

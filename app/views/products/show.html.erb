@@ -1,2 +1,101 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<% content_for :title, "#{@product.name} - The Givingguide" %>
+
+<style>
+  .product-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .product-image-large {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .product-details {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+
+  .price-tag {
+    font-size: 2rem;
+    color: #2d6a4f;
+    font-weight: 700;
+  }
+
+  .experience-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="product-header">
+  <div class="container">
+    <h1 class="display-4 fw-bold"><%= @product.name %></h1>
+    <% if @product.price.present? %>
+      <p class="lead price-tag">$<%= number_with_precision(@product.price, precision: 2) %></p>
+    <% end %>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-lg-6 mb-4">
+      <% if @product.image.attached? %>
+        <%= image_tag @product.image, class: "product-image-large", alt: @product.name %>
+      <% else %>
+        <div class="product-image-large bg-light d-flex align-items-center justify-content-center">
+          <span style="font-size: 5rem;">🎁</span>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="product-details">
+        <h3 class="mb-3">Product Details</h3>
+        <% if @product.description.present? %>
+          <p class="lead"><%= @product.description %></p>
+        <% end %>
+
+        <% if @product.url.present? %>
+          <div class="mt-4">
+            <%= link_to "View on Retailer's Site", @product.url,
+                class: "btn btn-primary btn-lg",
+                target: "_blank",
+                rel: "noopener" %>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @experiences.any? %>
+        <div class="mt-4">
+          <h4 class="mb-3">What People Are Saying</h4>
+          <% @experiences.each do |experience| %>
+            <div class="experience-card">
+              <p class="mb-2"><%= experience.content %></p>
+              <small class="text-muted">
+                — <%= experience.user.email.split('@').first.capitalize %>,
+                <%= time_ago_in_words(experience.created_at) %> ago
+              </small>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= link_to "← Back to Products", products_path, class: "btn btn-outline-secondary" %>
+    <% if user_signed_in? %>
+      <%= link_to "Share Your Experience", new_experience_path, class: "btn btn-outline-primary" %>
+    <% end %>
+  </div>
+</div>

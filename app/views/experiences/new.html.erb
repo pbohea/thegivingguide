@@ -1,2 +1,115 @@
-<h1>Experiences#new</h1>
-<p>Find me in app/views/experiences/new.html.erb</p>
+<% content_for :title, "Share Your Experience - The Givingguide" %>
+
+<style>
+  .experience-form {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2rem;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-header h1 {
+    color: #2d6a4f;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .form-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    padding: 0.75rem;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #2d6a4f;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  }
+
+  .btn-submit {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
+  }
+</style>
+
+<div class="container">
+  <div class="experience-form">
+    <div class="form-header">
+      <h1>Share Your Gift Experience</h1>
+      <p>Help others by sharing your gift-giving story</p>
+    </div>
+
+    <div class="form-card">
+      <%= form_with model: @experience, local: true do |f| %>
+        <% if @experience.errors.any? %>
+          <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Please fix the following errors:</h4>
+            <ul>
+              <% @experience.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="mb-3">
+          <%= f.label :content, "Your Experience", class: "form-label" %>
+          <%= f.text_area :content, class: "form-control", rows: 6,
+              placeholder: "Tell us about your gift-giving experience. What did you give? How did they react? Would you recommend this gift to others?",
+              required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :rating, "How would you rate this gift? (optional)", class: "form-label" %>
+          <%= f.select :rating,
+              (1..5).map { |n| ["#{"⭐" * n} (#{n} stars)", n] },
+              { include_blank: "Select a rating" },
+              class: "form-select" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :product_id, "Related Product (optional)", class: "form-label" %>
+          <%= f.select :product_id,
+              options_from_collection_for_select(@products, :id, :name),
+              { include_blank: "Select a product" },
+              class: "form-select" %>
+          <small class="text-muted">Select a product if your experience relates to a specific item in our catalog</small>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :gift_guide_id, "Related Gift Guide (optional)", class: "form-label" %>
+          <%= f.select :gift_guide_id,
+              options_from_collection_for_select(@gift_guides, :id, :name),
+              { include_blank: "Select a gift guide" },
+              class: "form-select" %>
+          <small class="text-muted">Or select a gift guide if your experience relates to a collection</small>
+        </div>
+
+        <%= f.submit "Share Experience", class: "btn btn-submit" %>
+      <% end %>
+    </div>
+  </div>
+</div>

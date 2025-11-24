@@ -1,2 +1,81 @@
-<h1>Occasions#index</h1>
-<p>Find me in app/views/occasions/index.html.erb</p>
+<% content_for :title, "Occasions - The Givingguide" %>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .occasion-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    height: 100%;
+  }
+
+  .occasion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  .occasion-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .occasion-name {
+    color: #2d6a4f;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">Gift Occasions</h1>
+    <p>Find the perfect gift for any occasion</p>
+  </div>
+</div>
+
+<div class="container">
+  <% if @occasions.any? %>
+    <div class="row">
+      <% @occasions.each do |occasion| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="occasion-card">
+            <div class="occasion-icon">🎉</div>
+            <h3 class="occasion-name">
+              <%= link_to occasion.name, occasion_path(occasion), class: "text-decoration-none" %>
+            </h3>
+            <% if occasion.description.present? %>
+              <p class="text-muted"><%= truncate(occasion.description, length: 100) %></p>
+            <% end %>
+            <% guides_count = occasion.gift_guides.count %>
+            <% if guides_count > 0 %>
+              <p class="small text-muted mt-2"><%= pluralize(guides_count, 'gift guide') %> available</p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5">
+      <p class="text-muted">No occasions available yet. Check back soon!</p>
+      <%= link_to "Request a Consultation", new_consultation_request_path, class: "btn btn-primary mt-3" %>
+    </div>
+  <% end %>
+</div>

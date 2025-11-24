@@ -1,2 +1,136 @@
-<h1>ConsultationRequests#new</h1>
-<p>Find me in app/views/consultation_requests/new.html.erb</p>
+<% content_for :title, "Request a Consultation - The Givingguide" %>
+
+<style>
+  .consultation-form {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2rem;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-header h1 {
+    color: #2d6a4f;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .form-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .form-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    padding: 0.75rem;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #2d6a4f;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  }
+
+  .btn-submit {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  }
+</style>
+
+<div class="container">
+  <div class="consultation-form">
+    <div class="form-header">
+      <h1>Request a Consultation</h1>
+      <p>Let's find the perfect gift together. Fill out the form below and we'll be in touch within 24 hours.</p>
+    </div>
+
+    <div class="form-card">
+      <%= form_with model: @consultation_request, local: true do |f| %>
+        <% if @consultation_request.errors.any? %>
+          <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Please fix the following errors:</h4>
+            <ul>
+              <% @consultation_request.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="mb-3">
+          <%= f.label :name, class: "form-label" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "Your name", required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control", placeholder: "your@email.com", required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :phone, "Phone (optional)", class: "form-label" %>
+          <%= f.telephone_field :phone, class: "form-control", placeholder: "(555) 123-4567" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :preferred_contact_method, "How should we contact you?", class: "form-label" %>
+          <%= f.select :preferred_contact_method,
+              [["Email", "email"], ["Phone", "phone"], ["Either", "either"]],
+              { include_blank: "Select one" },
+              class: "form-select" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :budget_range, "What's your budget? (optional)", class: "form-label" %>
+          <%= f.select :budget_range,
+              [
+                ["Under $50", "under_50"],
+                ["$50 - $100", "50_100"],
+                ["$100 - $250", "100_250"],
+                ["$250 - $500", "250_500"],
+                ["$500+", "over_500"]
+              ],
+              { include_blank: "Select a range" },
+              class: "form-select" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :message, "Tell us about who you're shopping for and the occasion", class: "form-label" %>
+          <%= f.text_area :message, class: "form-control", rows: 6,
+              placeholder: "Example: I'm looking for a birthday gift for my mom who loves gardening and reading...",
+              required: true %>
+        </div>
+
+        <%= f.submit "Request Consultation", class: "btn btn-submit" %>
+      <% end %>
+    </div>
+  </div>
+</div>

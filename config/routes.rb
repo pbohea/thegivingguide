@@ -41,6 +41,16 @@ Rails.application.routes.draw do
   # User dashboard
   get "/dashboard", to: "users#dashboard", as: :user_dashboard
 
+  # Admin panel
+  namespace :admin do
+    root to: "dashboard#index"
+    resources :gift_guides
+    resources :products
+    resources :occasions
+    resources :experiences, only: [:index, :show, :destroy]
+    resources :consultation_requests, only: [:index, :show, :destroy]
+  end
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 

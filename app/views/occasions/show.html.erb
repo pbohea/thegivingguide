@@ -1,2 +1,80 @@
-<h1>Occasions#show</h1>
-<p>Find me in app/views/occasions/show.html.erb</p>
+<% content_for :title, "#{@occasion.name} - The Givingguide" %>
+
+<style>
+  .occasion-header {
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .occasion-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .guide-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+    height: 100%;
+  }
+
+  .guide-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .guide-title {
+    color: #2d6a4f;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="occasion-header">
+  <div class="container">
+    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+    <h1 class="occasion-title"><%= @occasion.name %></h1>
+    <% if @occasion.description.present? %>
+      <p class="lead"><%= @occasion.description %></p>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <% if @gift_guides.any? %>
+    <h2 class="mb-4">Gift Guides for <%= @occasion.name %></h2>
+    <div class="row">
+      <% @gift_guides.each do |guide| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="guide-card">
+            <h3 class="guide-title">
+              <%= link_to guide.name, gift_guide_path(guide), class: "text-decoration-none" %>
+            </h3>
+            <% if guide.description.present? %>
+              <p class="text-muted"><%= truncate(guide.description, length: 120) %></p>
+            <% end %>
+            <div class="mt-3">
+              <%= link_to "View Guide →", gift_guide_path(guide), class: "btn btn-outline-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5">
+      <p class="text-muted">No gift guides available for this occasion yet.</p>
+      <%= link_to "Request a Consultation", new_consultation_request_path, class: "btn btn-primary mt-3" %>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-4 mb-5">
+    <%= link_to "← Back to All Occasions", occasions_path, class: "btn btn-outline-secondary" %>
+  </div>
+</div>
