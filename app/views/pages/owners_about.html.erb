@@ -1,0 +1,88 @@
+
+  <div class="container my-5 pt-2">
+  <!-- Hero Section -->
+  <div class="hero-section text-center">
+    <div class="container px-3 px-md-4 py-4 py-md-5">
+      <h1 class="display-6 display-md-4 fw-bold mb-2 mb-md-3">For Venue Owners</h1>
+      <p class="lead fs-5 fs-md-4 mb-0">
+        Get your venue on the map and attract live music fans in your area
+      </p>
+    </div>
+  </div>
+  
+  <!-- Feature Cards -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div class="feature-card shadow-sm">
+        <h4 class="fw-bold mb-3">Claim or Add Your Venue</h4>
+        <p class="text-muted mb-0">
+          After signing up, you can search for your venue on the app. If it's already listed, claim it as your own to manage your events. If it's not listed yet, you can add it manually.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="feature-card shadow-sm">
+        <h4 class="fw-bold mb-3">Post Events</h4>
+        <p class="text-muted mb-0">
+          Once your venue is approved or created, click <strong>"Add Event"</strong> to promote a live show and attract music fans to your venue.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="cta-section text-center">
+    <h3 class="fw-bold mb-3">Ready to bring live music to your venue?</h3>
+    <p class="text-muted mb-4">Join BarChord and start promoting your events</p>
+    <%= link_to "Sign Up as an Owner", new_owner_registration_path, class: "btn btn-primary btn-modern btn-lg" %>
+  </div>
+</div>
+
+<style>
+  .hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    color: white;
+    padding: .25rem 0;
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .feature-card {
+    border: none;
+    border-radius: 1rem;
+    padding: 2rem;
+    height: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: white;
+    border-left: 4px solid #0d6efd;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(13, 110, 253, 0.15);
+  }
+  
+  .feature-card h4 {
+    color: #0d6efd;
+  }
+  
+  .cta-section {
+    background: linear-gradient(135deg, #e7f1ff 0%, #cfe2ff 100%);
+    border-radius: 1rem;
+    padding: 3rem;
+    margin-top: 3rem;
+  }
+  
+  .btn-modern {
+    padding: 0.75rem 2rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  
+  .btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+  }
+</style>
